@@ -71,7 +71,7 @@
                 </InputNumber>
                 <InputNumber  disabled="disabled" :value='comboList[5].balance'style="margin-left:100px"></InputNumber>
             </FormItem>
-            <FormItem  label="高速包月">
+            <!-- <FormItem  label="高速包月">
                 <InputNumber
                     :max="comboList[6].balance"
                     :min="0"
@@ -110,7 +110,7 @@
                     :parser="value => value.replace(/[\s\.]/, '')">
                 </InputNumber>
                 <InputNumber  disabled="disabled" :value='comboList[9].balance'style="margin-left:100px"></InputNumber>
-            </FormItem>
+            </FormItem> -->
         </Form>
         <div slot="footer">
             <Button type="text" @click="show = false">取消</Button>
