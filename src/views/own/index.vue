@@ -1,7 +1,7 @@
 <template>
     <Card class="list" v-if="isReady">
         <Form ref="form" inline :model="filterParams" @submit.native.prevent>
-            <Row type="flex">
+            <!-- <Row type="flex">
                 <Col :xs="12" :sm="6" :lg="4" :xl="3">
                     <FormItem prop="status">
                         <Select clearable placeholder="使用状态" v-model="filterParams.status">
@@ -19,33 +19,26 @@
                         <Button type="info" @click="handleCreateAccountModal">生成卡券</Button>
                     </FormItem>
                 </Col>
-                <Col span="3" v-for="item,index in comboList" :key="item.goods_id"> 
-                    <FormItem label="7天套餐">
-                        <span slot="label">{{item.goodsName}}</span>
-                        <InputNumber  disabled="disabled" :value='item.balance'></InputNumber>
-                    </FormItem>
-                </Col>
+                
                
-            </Row>
+            </Row> -->
         </Form>
         <Table :data="list" :columns="columns" >
-            <!-- <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary" size="small" style="margin-right: 5px" @click="handleEnable(row)">启用</Button>
-                <Button type="error" size="small" @click="handleEnableNo(row)">禁用</Button>
-            </template> -->
             <template slot-scope="{ row, index }" slot="status">
-                {{row.status == 1?'正常':'禁用'}}
+                {{row.status == 1?'已到期':'启用中'}}
             </template>
-            <template slot-scope="{ row, index }" slot="goodsId">
-                {{goodsChoose(row.goodsId)}}
+            <template slot-scope="{ row, index }" slot="memberPaid">
+                {{row.memberPaid == false?'否':'是'}}
             </template>
+            <template slot-scope="{ row, index }" slot="experience">
+                {{row.experience == false?'否':'是'}}
+            </template>
+           
         </Table>
         <Page style="margin-top: 15px;"
               :total="page.total" :current="page.current"
               @on-change="handlePageNoChange" @on-page-size-change="handlePageSizeChange" />
 
-         <coupon-account v-model="couponAccountModal" @on-refresh="handleFilterQuery" :comboList='comboList'/>
-         <create-account v-model="createAccountModal" @on-refresh="handleFilterQuery" :comboList='comboList' :proxyId='proxyId'/>
 
     </Card>
 </template>
@@ -54,14 +47,12 @@
     import page from '@/mixins/page'
     import { datePicker } from '@/config'
     import { dayjs } from '@/libs/utils'
-    import CouponAccount from './components/coupon-account'
-    import CreateAccount from './components/create-account'
     // import { log } from 'util';
 
     export default {
-        name: 'coupon',
+        name: 'own',
         mixins: [ page ],
-        components:{CouponAccount,CreateAccount},
+        components:{},
         methods: {
             handleCouponAccountModal(){
                 this.couponAccountModal = true
@@ -73,48 +64,29 @@
                 this.page.current = 1
                 this.getList()
             },
-            handleEnable (row) {
-                const adminId = JSON.parse(window.localStorage.getItem("user")).id
-                const cardId = row.cardId
-                const status = 1
-                api.coupon.update({
-                    adminId,status,cardId
-                })
-                this.handleFilterQuery ()
-            },
-            handleEnableNo (row) {
-                const adminId = JSON.parse(window.localStorage.getItem("user")).id
-                const cardId = row.cardId
-                const status = 2
-                api.coupon.update({
-                    adminId,status,cardId
-                })
-                this.handleFilterQuery ()
-            },
             getListData () {
                 return new Promise(async (resolve, reject) => {
                     try {
                         const { current: pageNo, pageSize } = this.page
                         const { status,cardId } = this.filterParams
                         
-                        const memberId = JSON.parse(window.localStorage.getItem("user")).memberId
-                        const adminId = JSON.parse(window.localStorage.getItem("user")).id
+                        const account = 15999918286
                         
-                        const { count, cardRecords,proxyId } = await api.coupon.list({
-                            pageNo, pageSize,status,cardId,memberId
+                        const { count, members,proxyId } = await api.own.list({
+                            pageNo, pageSize,status,cardId,account
                         })
                         
                         this.proxyId = proxyId
-                        const { data,code } = await api.agent.queryCNum({
-                            memberId
-                        })
-                        if (code == 200){
-                            this.comboList = data.sort((a,b)=>{
-                              return a.goods_id -  b.goods_id
-                            });
-                        }     
+                        // const { data,code } = await api.agent.queryCNum({
+                        //     adminId
+                        // })
+//                         if (code == 200){
+//                             this.comboList = data.sort((a,b)=>{
+//                               return a.goods_id -  b.goods_id
+//                             });
+//                         }     
                         resolve({
-                            data: cardRecords,
+                            data: members,
                             meta: {
                                 total: count
                             }
@@ -124,18 +96,6 @@
                     }
                 })
             },
-            goodsChoose(goodsId){
-                if(goodsId == 101){
-                    return '包月套餐'
-                }else if (goodsId == 102){
-                    return '季度套餐'
-                }else if(goodsId == 103){
-                    return '半年套餐'
-                }else if (goodsId == 104){
-                    return '全年套餐'
-                }
-                return '体验套餐'
-            }
         },
         data () {
             return {
@@ -143,43 +103,20 @@
                     cardId: '',
                     status: '',
                 },
-                comboList:[
-                    {
-	            		"balance":0,
-	            		"goods_id":90
-	            	},
-	            	{
-	            		"balance":0,
-	            		"goods_id":95
-	            	},
-	            	{
-	            		"balance":0,
-	            		"goods_id":101
-	            	},
-	            	{
-	            		"balance":0,
-	            		"goods_id":102
-	            	},
-	            	{
-	            		"balance":0,
-	            		"goods_id":103
-	            	},
-	            	{
-	            		"balance":0,
-	            		"goods_id":104
-	            	}
-	            ],
                 proxyId:123,
                 couponAccountModal:false,
                 createAccountModal:false,
                 columns: [
-                    { title: '卡号', key: 'cardId', width: 200 },
-                    { title: '所属代理商', key: 'proxyId', width: 150, ellipsis: true, tooltip: true },
-                    { title: '卡状态', slot: 'status', width: 160 },
-                    { title: '套餐', slot: 'goodsId', width: 160 },
-                    { title: '激活时间', key: 'timeAdd', width: 200 },
-                    { title: '有效期', key: 'timeExpire', width: 200 },
-                    { title: '卡密', key: 'cardSerial', minWidth: 100,align: 'center'},
+                    { title: '用户ID', key: 'memberId', width: 150, ellipsis: true, tooltip: true,align: 'center' },
+                    { title: '手机号码', key: 'memberAccount', width: 200 ,align: 'center'},
+                    { title: '卡状态', slot: 'status', width: 160 ,align: 'center'},
+                    { title: '是否为付费用户', slot: 'memberPaid', width: 150,align: 'center'},
+                    { title: '是否体验账号', slot: 'experience', minWidth: 100,align: 'center'},
+                    { title: '账号激活时间', key: 'timeAdd', width: 200 },
+                    { title: '最后登录时间', key: 'timeLogin', width: 200 },
+                    { title: '续费或体验开始时间', key: 'timeStart', width: 200 },
+                    { title: '到期时间', key: 'timeEnd', width: 200 },
+                    
                     // {slot: 'action',title: '操作',width: 150,align: 'center',fixed:'left'}
                     
                 ],

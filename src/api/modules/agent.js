@@ -9,7 +9,7 @@ const module = '/cardproxy'
  * @returns { Promise }
  */
 export const list = (params) => {
-    return instance.post(`${module}/list`, params)
+    return instance.post(`/admin/Subordinate/agent`, params)
 }
 /**
  * 添加代理商

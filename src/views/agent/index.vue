@@ -209,11 +209,12 @@
                 return new Promise(async (resolve, reject) => {
                     try {
                         const { current: pageNo, pageSize } = this.page
-                        const { status,account } = this.filterParams
+                        const { status } = this.filterParams
+                        const account  = JSON.parse(window.localStorage.getItem("user")).id
                         const adminId = JSON.parse(window.localStorage.getItem("user")).id
                         
                         const { count, proxy } = await api.agent.list({
-                            pageNo, pageSize,adminId,status,account
+                            pageNo, pageSize,account
                         })
 
                         const { code,data,message } = await api.agent.queryCNum({

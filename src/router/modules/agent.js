@@ -8,7 +8,7 @@ export default [
         path: '/agent',
         meta: {
             icon: 'ios-people',
-            title: '代理商管理',
+            title: '下级代理管理',
             permissions: [ 'guest' ]
         },
         component: Main,

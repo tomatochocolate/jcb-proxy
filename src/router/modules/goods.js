@@ -8,7 +8,7 @@ export default [
         path: '/goods',
         meta: {
             icon: 'md-list',
-            title: '套餐管理',
+            title: '未开通',
             permissions: [ 'guest' ]
         },
         component: Main,
@@ -19,7 +19,7 @@ export default [
                 meta: {
                     menu: false
                 },
-                component: () => import(/* webpackChunkName: "goods" */'@/views/goods')
+                component: () => import(/* webpackChunkName: "goods" */'@/views/other/develop')
             }
         ]
     }

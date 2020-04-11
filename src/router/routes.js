@@ -13,6 +13,7 @@ import appVersion from './modules/app_version'
 import statistics from './modules/statistics'
 import coupon from './modules/coupon'
 import admin from './modules/admin'
+import own from './modules/own'
 
 export default [
     ...home,
@@ -26,5 +27,6 @@ export default [
     ...advert,
     ...user,
     ...goods,
-    ...admin
+    ...admin,
+    ...own
 ]

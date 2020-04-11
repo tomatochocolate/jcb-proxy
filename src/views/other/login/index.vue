@@ -32,22 +32,25 @@
 
                 this.isSubmit = true
                 try {
-                    const { data, code, message } = await system.login(this.params)
-                    console.log(data);
+                    
+                    const { account, code,token,memberId } = await system.login(this.params)
+                    console.log(account);
                     
                     this.isSubmit = false
-                    if (code !== 200) {
+                    if (code !== 0) {
+                        var message = '登录失败,账号不存在,或密码错误,或被禁用'
                         this.$Message.error(message)
                         await this.captcha()
                         return
                     }
                     this.$store.dispatch('app/login', {
                         user: {
-                            id: data.adminId,
-                            username: data.adminId,
-                            loginAccount: data.loginAccount
+                            id: account,
+                            username: account,
+                            loginAccount: account,
+                            memberId:memberId
                         },
-                        token: data.token
+                        token: token
                     })
                     this.$Message.success('登录成功')
                     this.$router.replace({ name: 'home' })

@@ -8,7 +8,7 @@ export default [
         path: '/admin',
         meta: {
             icon: 'md-ionic',
-            title: '管理员管理',
+            title: '未开通',
             permissions: [ 'guest' ]
         },
         component: Main,
@@ -19,7 +19,7 @@ export default [
                 meta: {
                     menu: false
                 },
-                component: () => import(/* webpackChunkName: "admin" */'@/views/admin')
+                component: () => import(/* webpackChunkName: "admin" */'@/views/other/develop')
             }
         ]
     }

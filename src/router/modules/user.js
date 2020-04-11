@@ -8,7 +8,7 @@ export default [
         path: '/user',
         meta: {
             icon: 'md-person',
-            title: '用户管理',
+            title: '未开通',
             permissions: [ 'guest' ]
         },
         component: Main,
@@ -19,7 +19,7 @@ export default [
                 meta: {
                     menu: false
                 },
-                component: () => import(/* webpackChunkName: "user" */'@/views/user')
+                component: () => import(/* webpackChunkName: "user" */'@/views/other/develop')
             }
         ]
     }
