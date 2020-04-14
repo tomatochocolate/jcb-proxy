@@ -16,7 +16,7 @@ export const list = (params) => {
  * @returns { Promise }
  */
 export const add = (params) => {
-    return instance.post(`${module}/add`, params)
+    return instance.post(`/add/cardproxy`, params)
 }
 /**
  * 修改代理商资料

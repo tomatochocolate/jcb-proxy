@@ -1,5 +1,5 @@
 <template>
-    <Modal mask-closable scrollable title="新增代理商"
+    <Modal mask-closable scrollable title="新增代理"
            :width="500" :loading="isSubmit"
            v-model="show">
         <Form ref="form"
@@ -8,14 +8,14 @@
             <FormItem prop="account" label="账号">
                 <Input clearable type="text" placeholder="请输入账号" :maxlength="32" v-model="params.account" @on-enter="handleSubmitForm"/>
             </FormItem>
-            <FormItem prop="password" label="密码">
+            <!-- <FormItem prop="password" label="密码">
                 <Input clearable type="password" placeholder="请输入密码（6~16位）" :maxlength="16" v-model="params.password" @on-enter="handleSubmitForm" />
-            </FormItem>
-            <FormItem prop="realname" label="代理名称">
+            </FormItem> -->
+            <FormItem prop="proxyName"  label="代理名称">
                 <Input clearable type="text" placeholder="请输代理名称" v-model="params.proxyName" @on-enter="handleSubmitForm"/>
             </FormItem>
             <FormItem  label="渠道码">
-                <Input clearable type="text" placeholder="请输入渠道码" v-model="params.channelCode" @on-enter="handleSubmitForm"/>
+                <Input prop="channelCode" clearable type="text" placeholder="请输入渠道码" v-model="params.channelCode" @on-enter="handleSubmitForm"/>
             </FormItem>                        
         </Form>
         <div slot="footer">
@@ -40,6 +40,7 @@
             show (value) {
                 if (!value) this.$refs.form.resetFields()
                 this.$emit('input', value)
+                
             },
             value (value) {
                 this.show = value
@@ -74,10 +75,9 @@
                 show: this.value,
                 params: {
                     account: '',
-                    password: '',
                     proxyName: '',
                     channelCode:'',
-                    adminId:''
+                    memberId:''
                 },
                 rules: {
                     phone: [
@@ -99,7 +99,7 @@
             }
         },
         mounted(){
-            this.params.adminId = JSON.parse(window.localStorage.getItem("user")).id
+            this.params.memberId = JSON.parse(window.localStorage.getItem("user")).memberId
         }
     }
 </script>

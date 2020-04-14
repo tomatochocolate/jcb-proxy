@@ -5,8 +5,8 @@
                 <Col :xs="12" :sm="6" :lg="4" :xl="3">
                     <FormItem prop="status">
                         <Select clearable placeholder="使用状态" v-model="filterParams.status">
-                            <Option value="1">已使用</Option>
-                            <Option value="2">未使用</Option>
+                            <Option value="1">正常</Option>
+                            <Option value="2">禁用</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -45,7 +45,7 @@
               @on-change="handlePageNoChange" @on-page-size-change="handlePageSizeChange" />
 
          <coupon-account v-model="couponAccountModal" @on-refresh="handleFilterQuery" :comboList='comboList'/>
-         <create-account v-model="createAccountModal" @on-refresh="handleFilterQuery" :comboList='comboList' :proxyId='proxyId'/>
+         <create-account v-model="createAccountModal" @on-refresh="handleFilterQuery" :comboList='comboList' :memberId='memberId'/>
 
     </Card>
 </template>
@@ -104,6 +104,7 @@
                             pageNo, pageSize,status,cardId,memberId
                         })
                         
+                        this.memberId = memberId
                         this.proxyId = proxyId
                         const { data,code } = await api.agent.queryCNum({
                             memberId
@@ -170,11 +171,12 @@
 	            	}
 	            ],
                 proxyId:123,
+                memberId:1,
                 couponAccountModal:false,
                 createAccountModal:false,
                 columns: [
                     { title: '卡号', key: 'cardId', width: 200 },
-                    { title: '所属代理商', key: 'proxyId', width: 150, ellipsis: true, tooltip: true },
+                    // { title: '所属代理商', key: 'proxyId', width: 150, ellipsis: true, tooltip: true },
                     { title: '卡状态', slot: 'status', width: 160 },
                     { title: '套餐', slot: 'goodsId', width: 160 },
                     { title: '激活时间', key: 'timeAdd', width: 200 },

@@ -78,7 +78,8 @@
                 setCurrentRoute: 'currentRoute'
             }),
             handleAddAccount () {
-                this.addAccountModal = true
+                // this.addAccountModal = true
+                window.open("http://localhost:8080/login.html?flag=true&A=a",'newwindow','height=800,width=900');
             },
             change(){
                    outLogin()

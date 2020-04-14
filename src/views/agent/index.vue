@@ -26,67 +26,30 @@
                 <Col>
                     <FormItem class="btn-group">
                         <Button type="primary" @click="handleFilterQuery">查询</Button>
-                        <Button type="info" @click="handleAddAccount">新增代理商</Button>
-                        <Button type="info" @click="handleTableAccount">分配代理卡券余额</Button>
+                        <Button type="info" @click="handleAddAccount">新增代理</Button>
+                        <!-- <Button type="info" @click="handleTableAccount">分配代理卡券余额</Button> -->
                     </FormItem>
                 </Col>
-                <Col span="3"> 
+                <Col span="3" v-for="item,index in comboList" :key="item.goods_id"> 
                     <FormItem label="7天套餐">
-                        <InputNumber  disabled="disabled" :value='comboList[0].balance'></InputNumber>
+                        <span slot="label">{{item.goodsName}}</span>
+                        <InputNumber  disabled="disabled" :value='item.balance'></InputNumber>
                     </FormItem>
                 </Col>
-                <Col span="3"> 
-                    <FormItem label="15天套餐">
-                        <InputNumber  disabled="disabled" :value='comboList[1].balance'></InputNumber>
-                    </FormItem>
-                </Col>
-                <Col span="3"> 
-                    <FormItem label="月套餐">
-                        <InputNumber  disabled="disabled" :value='comboList[2].balance'></InputNumber>
-                    </FormItem>
-                </Col>
-                <Col span="3">
-                    <FormItem label="季度套餐">
-                        <InputNumber  disabled="disabled" :value='comboList[3].balance'></InputNumber>
-                    </FormItem>
-                </Col>
-                <Col span="3">
-                    <FormItem label="半年套餐">
-                        <InputNumber  disabled="disabled" :value='comboList[4].balance'></InputNumber>
-                    </FormItem>
-                </Col>
-                <Col span="3">
-                    <FormItem label="全年套餐">
-                        <InputNumber  disabled="disabled" :value='comboList[5].balance'></InputNumber>
-                    </FormItem>
-                </Col>
-                <!-- <Col span="3">
-                    <FormItem label="高速包月">
-                        <InputNumber  disabled="disabled" :value='comboList[6].balance'></InputNumber>
-                    </FormItem>
-                </Col>
-                <Col span="3">
-                    <FormItem label="高速季度">
-                        <InputNumber  disabled="disabled" :value='comboList[7].balance'></InputNumber>
-                    </FormItem>
-                </Col>
-                <Col span="3">
-                    <FormItem label="高速半年">
-                        <InputNumber  disabled="disabled" :value='comboList[8].balance'></InputNumber>
-                    </FormItem>
-                </Col>
-                <Col span="3">
-                    <FormItem label="高速全年">
-                        <InputNumber  disabled="disabled" :value='comboList[9].balance'></InputNumber>
-                    </FormItem>
-                </Col> -->
+               
             </Row>
         </Form>
         <Table :data="list" :columns="columns" >
+            <template slot-scope="{ row, index }" slot="status">
+                {{row.status == 1?'正常':'禁用'}}
+            </template>
             <template slot-scope="{ row, index }" slot="action">
                 <Button type="primary" size="small" style="margin-right: 5px" @click="onAgent(row)">启用</Button>
                 <Button type="error" size="small" style="margin-right: 5px" @click="offAgent(row)">禁用</Button>
                 <!-- <Button type="success" size="small" @click="handlemodifyAccount">修改</Button> -->
+            </template>
+            <template slot-scope="{ row, index }" slot="share">
+                <Button type="success" size="small" style="margin-right: 5px" @click="handleTableAccount(row)">分配</Button>
             </template>
             <template slot-scope="{ row, index }" slot="goodsButton">
                 <Button type="warning" size="small" style="margin-right: 5px" @click="watchYe(row)">查看余额</Button>
@@ -106,7 +69,7 @@
               @on-change="handlePageNoChange" @on-page-size-change="handlePageSizeChange" />
 
         <add-account v-model="addAccountModal" @on-refresh="handleFilterQuery"/>
-        <table-expand  v-model="tableAccountModal" :comboList='comboList' @fatherMethod="fatherMethod"  @on-refresh='handleTableAccount' />
+        <table-expand  v-model="tableAccountModal" :comboList='comboList' @fatherMethod="fatherMethod"  @on-refresh='handleTableAccount' :proxyId='proxyId' />
         <modify-account v-model="modifyAccountModal" />
     </Card>
 </template>
@@ -128,10 +91,11 @@
             handleAddAccount () {
                 this.addAccountModal = true
             },
-            handleTableAccount () {
+            handleTableAccount (row) {
                 // this.tableAccountModal = true
                 // alert(this.tableAccountModal)
                 this.tableAccountModal = true
+                this.proxyId = row.proxyId
                 
             }, 
             handlemodifyAccount () {
@@ -212,13 +176,15 @@
                         const { status } = this.filterParams
                         const account  = JSON.parse(window.localStorage.getItem("user")).id
                         const adminId = JSON.parse(window.localStorage.getItem("user")).id
+                        const memberId = JSON.parse(window.localStorage.getItem("user")).memberId
                         
                         const { count, proxy } = await api.agent.list({
                             pageNo, pageSize,account
                         })
 
+
                         const { code,data,message } = await api.agent.queryCNum({
-                            adminId
+                            memberId
                         })
 
                         if (code == 200){
@@ -248,6 +214,7 @@
                     account: '',
                     status: 2
                 },
+                proxyId:'',
                 comboList:[
                     {
 	            		"balance":0,
@@ -288,13 +255,13 @@
                 ]
                 ,
                 columns: [
-                    {
-                        slot:'action',
-                        key: 'id',
-                        title: '操作',
-                        minWidth: 100,
-                        fixed:'left'
-                    },
+                    // {
+                    //     slot:'action',
+                    //     key: 'id',
+                    //     title: '操作',
+                    //     minWidth: 100,
+                    //     fixed:'left'
+                    // },
                     {
                         key: 'proxyLevel',
                         title: '代理级别',
@@ -302,8 +269,8 @@
                         minWidth: 100
                     },
                     {
-                        key: 'status',
-                        title: '账号状态(1)正常(0)禁用',
+                        slot: 'status',
+                        title: '账号状态',
                         width: 200,
                         align: 'center'
                     },
@@ -332,6 +299,14 @@
                         align: 'center',
                       
                     },
+                    {
+                        slot:'share',
+                        key: 'goodsButton',
+                        title: '套餐',
+                        align: 'center',
+                        fixed:'left'
+                    },
+
                 ],
                 editGoodsModal: {
                     show: false,

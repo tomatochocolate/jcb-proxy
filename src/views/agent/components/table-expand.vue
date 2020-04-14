@@ -5,11 +5,13 @@
         <Form ref="form" :model="params" :rules="rules" :label-width="90"
               @submit.native.prevent>
               
-            <FormItem prop="status" label="">
+            <FormItem prop="proxyId" label="">
                         <!-- <Select clearable placeholder="填写ID" v-model="params.proxyId" style="width:100px"  filterable>
                             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.value }}</Option>
                         </Select> -->
-             <Input clearable type="text" placeholder="请填写代理ID" :maxlength="32" v-model="params.proxyId" style="width: 100px" />           
+             <Input clearable disabled="disabled" type="text" placeholder="请填写代理ID" :maxlength="32" v-model="this.proxyId" style="width: 100px" />       
+
+
             </FormItem>
             <FormItem  label="7天套餐">
                 <InputNumber
@@ -71,46 +73,7 @@
                 </InputNumber>
                 <InputNumber  disabled="disabled" :value='comboList[5].balance'style="margin-left:100px"></InputNumber>
             </FormItem>
-            <!-- <FormItem  label="高速包月">
-                <InputNumber
-                    :max="comboList[6].balance"
-                    :min="0"
-                    v-model="params.HmonthNum"
-                    :formatter="value => `${value}`"
-                    :parser="value => value.replace(/[\s\.]/, '')">
-                </InputNumber>
-                <InputNumber  disabled="disabled" :value='comboList[6].balance'style="margin-left:100px"></InputNumber>
-            </FormItem>
-            <FormItem  label="高速季度">
-                <InputNumber
-                    :max="comboList[7].balance"
-                    :min="0"
-                    v-model="params.HseasonNum"
-                    :formatter="value => `${value}`"
-                    :parser="value => value.replace(/[\s\.]/, '')">
-                </InputNumber>
-                <InputNumber  disabled="disabled" :value='comboList[7].balance'style="margin-left:100px"></InputNumber>
-            </FormItem>
-            <FormItem  label="高速半年">
-                <InputNumber
-                    :max="comboList[8].balance"
-                    :min="0"
-                    v-model="params.HhalfYearNum"
-                    :formatter="value => `${value}`"
-                    :parser="value => value.replace(/[\s\.]/, '')">
-                </InputNumber>
-                <InputNumber  disabled="disabled" :value='comboList[8].balance'style="margin-left:100px"></InputNumber>
-            </FormItem>
-            <FormItem  label="高速全年">
-                <InputNumber
-                    :max="comboList[9].balance"
-                    :min="0"
-                    v-model="params.HyearNum"
-                    :formatter="value => `${value}`"
-                    :parser="value => value.replace(/[\s\.]/, '')">
-                </InputNumber>
-                <InputNumber  disabled="disabled" :value='comboList[9].balance'style="margin-left:100px"></InputNumber>
-            </FormItem> -->
+           
         </Form>
         <div slot="footer">
             <Button type="text" @click="show = false">取消</Button>
@@ -132,6 +95,7 @@
             comboList : {
                 
             },
+            proxyId:'',
             tableAccountModal:{}
         },
         watch: {
@@ -139,7 +103,6 @@
                 
                 if (!value) this.$refs.form.resetFields()
                 this.$emit('input', value)
-                // this.showChange()
                 
             },
             value (value) {
@@ -157,6 +120,7 @@
                 this.isSubmit = true
                 try {
                     
+                    this.params.proxyId = this.proxyId
                     const { code, message } = await api.agent.planCNum(this.params)
 
                     this.isSubmit = false
@@ -165,7 +129,7 @@
                         return
                     }
                     this.show = false
-                    this.$emit('on-refresh')
+                    // this.$emit('on-refresh')
                     this.$emit('fatherMethod');
                     this.$Message.success('添加成功')
                 } catch (e) {
@@ -178,8 +142,8 @@
             return {
                 show: this.value,
                 params: {
-                    proxyId: '',
-                    adminId:'',
+                    proxyId: 1,
+                    memberId:'',
                     weekNum:0,
                     halfMonthNum:0,
                     monthNum:0,
@@ -231,7 +195,8 @@
             }
         },
         mounted(){
-            this.params.adminId = JSON.parse(window.localStorage.getItem("user")).id
+            this.params.memberId = JSON.parse(window.localStorage.getItem("user")).memberId
+            
         }
     }
 </script>

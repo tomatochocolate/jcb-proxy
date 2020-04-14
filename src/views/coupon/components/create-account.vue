@@ -8,7 +8,7 @@
                         <!-- <Select clearable placeholder="填写ID" v-model="params.unit" style="width:100px"  filterable>
                             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.value }}</Option>
                         </Select> -->
-                        <InputNumber  disabled="disabled" :value='proxyId'></InputNumber>
+                        <InputNumber  disabled="disabled" :value='memberId'></InputNumber>
             </FormItem>
             <FormItem prop="status" label="">
                         <Select clearable placeholder="选择套餐" v-model="params.unit" style="width:100px" >
@@ -54,7 +54,7 @@
             comboList : {
                 
             },
-            proxyId:''
+            memberId:''
         },
         watch: {
             show (value) {
@@ -71,13 +71,13 @@
 
                 this.isSubmit = true
                 try {
-                     const proxyId = this.proxyId
+                     const memberId = this.memberId
                      const number = this.number
                      const goodsId = this.params.unit
                      const cardType = 1
     
                     const {code,message} = await api.coupon.create({
-                       proxyId,number,goodsId,cardType
+                       memberId,number,goodsId,cardType
                     })
 
                     this.isSubmit = false
@@ -95,18 +95,18 @@
                     this.$emit('on-refresh')
                 }
             },
-            addTime(){
+            // addTime(){
                 
-                 const proxyId = this.proxyId
-                 const number = this.number
-                 const goodsId = this.params.unit
-                 const cardType = 1
+            //      const proxyId = this.proxyId
+            //      const number = this.number
+            //      const goodsId = this.params.unit
+            //      const cardType = 1
 
-                const abc = api.coupon.create({
-                   proxyId,number,goodsId,cardType
-                })
-                this.$emit('on-refresh')
-            },
+            //     const abc = api.coupon.create({
+            //        proxyId,number,goodsId,cardType
+            //     })
+            //     this.$emit('on-refresh')
+            // },
         },
         mounted (){
              this.couponID =  JSON.parse(window.localStorage.getItem("user")).id
