@@ -6,7 +6,7 @@
               :model="params" :rules="rules" :label-width="140"
               @submit.native.prevent>
             <FormItem prop="account" label="账号">
-                <Input clearable type="text" placeholder="请输入账号" :maxlength="32" v-model="params.account" @on-enter="handleSubmitForm"/>
+                <Input clearable type="text" placeholder="请输入账号" :maxlength="32" v-model="params.account" @on-enter="handleSubmitForm" />
             </FormItem>
             <FormItem prop="password" label="密码">
                 <Input clearable type="password" placeholder="请输入密码（6~16位）" :maxlength="16" v-model="params.password" @on-enter="handleSubmitForm" />

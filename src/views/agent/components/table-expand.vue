@@ -2,7 +2,7 @@
     <Modal mask-closable scrollable title="分配代理卡券余额"
            :width="500" :loading="isSubmit"
            v-model="show">
-        <Form ref="form" :model="params" :rules="rules" :label-width="90"
+        <Form ref="form" :model="params" :rules="rules" :label-width="100"
               @submit.native.prevent>
               
             <FormItem prop="proxyId" label="">
@@ -33,7 +33,7 @@
                 </InputNumber>
                 <InputNumber  disabled="disabled" :value='comboList[1].balance'style="margin-left:100px"></InputNumber>
             </FormItem>
-            <FormItem  label="月套餐">
+            <FormItem  label="包月套餐">
                 <InputNumber
                     :max="comboList[2].balance"
                     :min="0"
@@ -72,6 +72,46 @@
                     :parser="value => value.replace(/[\s\.]/, '')">
                 </InputNumber>
                 <InputNumber  disabled="disabled" :value='comboList[5].balance'style="margin-left:100px"></InputNumber>
+            </FormItem>
+            <FormItem  label="高速包月">
+                <InputNumber
+                    :max="comboList[6].balance"
+                    :min="0"
+                    v-model="params.HmonthNum"
+                    :formatter="value => `${value}`"
+                    :parser="value => value.replace(/[\s\.]/, '')">
+                </InputNumber>
+                <InputNumber  disabled="disabled" :value='comboList[6].balance'style="margin-left:100px"></InputNumber>
+            </FormItem>
+            <FormItem  label="高速季度">
+                <InputNumber
+                    :max="comboList[7].balance"
+                    :min="0"
+                    v-model="params.HseasonNum"
+                    :formatter="value => `${value}`"
+                    :parser="value => value.replace(/[\s\.]/, '')">
+                </InputNumber>
+                <InputNumber  disabled="disabled" :value='comboList[7].balance'style="margin-left:100px"></InputNumber>
+            </FormItem>
+            <FormItem  label="高速半年">
+                <InputNumber
+                    :max="comboList[8].balance"
+                    :min="0"
+                    v-model="params.HhalfYearNum"
+                    :formatter="value => `${value}`"
+                    :parser="value => value.replace(/[\s\.]/, '')">
+                </InputNumber>
+                <InputNumber  disabled="disabled" :value='comboList[8].balance'style="margin-left:100px"></InputNumber>
+            </FormItem>
+            <FormItem  label="高速全年套餐">
+                <InputNumber
+                    :max="comboList[9].balance"
+                    :min="0"
+                    v-model="params.HyearNum"
+                    :formatter="value => `${value}`"
+                    :parser="value => value.replace(/[\s\.]/, '')">
+                </InputNumber>
+                <InputNumber  disabled="disabled" :value='comboList[9].balance'style="margin-left:100px"></InputNumber>
             </FormItem>
            
         </Form>
