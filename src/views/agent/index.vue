@@ -5,7 +5,7 @@
                 <Col :xs="12" :sm="6" :lg="4" :xl="3">
                     <FormItem prop="status">
                         <Select clearable placeholder="有效状态" v-model="filterParams.status">
-                            <Option value="2">全部</Option>
+                            <!-- <Option value="2">全部</Option> -->
                             <Option value="1">正常</Option>
                             <Option value="0">禁用</Option>
                         </Select>
