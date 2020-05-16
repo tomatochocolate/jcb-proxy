@@ -69,7 +69,7 @@
               @on-change="handlePageNoChange" @on-page-size-change="handlePageSizeChange" />
 
         <add-account v-model="addAccountModal" @on-refresh="handleFilterQuery"/>
-        <table-expand  v-model="tableAccountModal" :comboList='comboList' @fatherMethod="fatherMethod"  @on-refresh='handleTableAccount' :proxyId='proxyId' />
+        <!-- <table-expand  v-model="tableAccountModal" :comboList='comboList' @fatherMethod="fatherMethod"  @on-refresh='handleTableAccount' :proxyId='proxyId' /> -->
         <modify-account v-model="modifyAccountModal" />
     </Card>
 </template>

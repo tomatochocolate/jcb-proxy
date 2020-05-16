@@ -79,7 +79,13 @@
             }),
             handleAddAccount () {
                 // this.addAccountModal = true
-                window.open("http://localhost:8080/login.html?flag=true&A=a",'newwindow','height=800,width=900');
+                var hostUrl  = window.location.host
+                // alert(hostUrl);
+
+                // window.open(hostUrl,'newwindow','height=800,width=900');
+                var openUrl = 'https://' + hostUrl + '/login.html?flag=true&A=a'
+                // var localUrl = "http://localhost:8080/login.html?flag=true&A=a"
+                window.open(openUrl,'newwindow','height=800,width=900');
             },
             change(){
                    outLogin()
