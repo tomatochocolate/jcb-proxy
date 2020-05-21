@@ -1,11 +1,11 @@
 /**
- *  订单
+ *  数据统计
  */
 import instance from '@/api/http'
 
 const module = '/admin/query'
 /**
- * 查询所有订单
+ * 数据统计列表
  * @returns { Promise }
  */
 export const list = (params) => {
