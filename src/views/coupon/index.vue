@@ -175,12 +175,12 @@
                 couponAccountModal:false,
                 createAccountModal:false,
                 columns: [
-                    { title: '卡号', key: 'cardId', width: 200 },
+                    { title: '卡号', key: 'cardId', width: 200,align: 'center' },
                     // { title: '所属代理商', key: 'proxyId', width: 150, ellipsis: true, tooltip: true },
-                    { title: '卡状态', slot: 'status', width: 160 },
-                    { title: '套餐', slot: 'goodsId', width: 160 },
-                    { title: '激活时间', key: 'timeAdd', width: 200 },
-                    { title: '有效期', key: 'timeExpire', width: 200 },
+                    { title: '卡状态', slot: 'status', width: 160,align: 'center' },
+                    { title: '套餐', slot: 'goodsId', width: 160,align: 'center'},
+                    { title: '激活时间', key: 'timeAdd', minWidth: 200,align: 'center' },
+                    { title: '有效期', key: 'timeExpire', minWidth: 200,align: 'center'},
                     { title: '卡密', key: 'cardSerial', minWidth: 100,align: 'center'},
                     // {slot: 'action',title: '操作',width: 150,align: 'center',fixed:'left'}
                     

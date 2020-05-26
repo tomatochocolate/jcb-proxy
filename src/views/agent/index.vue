@@ -287,8 +287,8 @@
                         minWidth: 100
                     },
                     {
-                        key: 'loginAccount',
-                        title: '账号',
+                        key: 'numberOfUsers',
+                        title: '所属代理用户量',
                         align: 'center',
                         width: 200
                     },
