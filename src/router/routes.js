@@ -14,6 +14,7 @@ import statistics from './modules/statistics'
 import coupon from './modules/coupon'
 import admin from './modules/admin'
 import own from './modules/own'
+import operate from './modules/operate'
 
 export default [
     ...home,
@@ -28,5 +29,6 @@ export default [
     // ...user,
     // ...goods,
     // ...admin,
-    ...own
+    ...own,
+    ...operate
 ]
