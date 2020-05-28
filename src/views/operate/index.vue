@@ -1,57 +1,34 @@
 <template>
-    <Card class="list" >
-        <Form ref="form" inline :model="filterParams" @submit.native.prevent>
-            <Row type="flex">
-                <Col :xs="12" :sm="6" :lg="4" :xl="3">
-                    <FormItem prop="status">
-                        <Select clearable placeholder="有效状态" v-model="filterParams.status">
-                            <Option value="">全部</Option>
-                            <Option value="1">禁用</Option>
-                            <Option value="2">正常</Option>
-                            <Option value="3">体验</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col :xs="12" :sm="6" :lg="4" :xl="3">
-                    <FormItem prop="id"><Input clearable placeholder="用户ID" v-model="filterParams.id" /></FormItem>
-                </Col>
-                <Col :xs="12" :sm="6" :lg="4" :xl="3">
-                    <FormItem prop="phone"><Input clearable placeholder="手机号" v-model="filterParams.phone" /></FormItem>
-                </Col>
-                <Col :xs="12" :sm="6" :lg="4" :xl="3">
-                    <FormItem prop="date">
-                        <DatePicker format="yyyy/MM/dd" type="daterange" placement="bottom-start" placeholder="请选择注册时间区间"
-                                    :options="datePickerOptions"
-                                    v-model="filterParams.created_at" />
-                    </FormItem>
-                </Col>
-                <Col>
-                    <FormItem class="btn-group">
-                        <Button type="primary" @click="handleFilterQuery">查询</Button>
-                        <!-- <Button type="info" @click="handleAddAccount">添加用户</Button> -->
-                        <Button type="info" @click="handleTimeAccount">修改时长</Button>
-                        <!-- <Button type="info" @click="handleFlowAccount">增加流量</Button> -->
-                    </FormItem>
-                </Col>
-            </Row>
-        </Form>
-        <Table :data="list" :columns="columns" @on-selection-change="selectFun">
-            <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary" size="small" style="margin-right: 5px" @click="handleON(row)">启用</Button>
-                <Button type="error" size="small" @click="handleOFF(row)">禁用</Button>
+    <Menu mode="horizontal" :theme="theme1" active-key="1">
+        <Menu-item key="1">
+            <Icon type="ios-paper"></Icon>
+            内容管理
+        </Menu-item>
+        <Menu-item key="2">
+            <Icon type="ios-people"></Icon>
+            用户管理
+        </Menu-item>
+        <Submenu key="3">
+            <template slot="title">
+                <Icon type="stats-bars"></Icon>
+                统计分析
             </template>
-            <template slot-scope="{ row, index }" slot="status">
-                {{row.status == 2?'正常':'禁用'}}
-            </template>
-        </Table>
-        <Page style="margin-top: 15px;"
-              :total="page.total" :current="page.current"
-              @on-change="handlePageNoChange" @on-page-size-change="handlePageSizeChange" />
-
-        <add-account v-model="addAccountModal" @on-refresh="handleFilterQuery" />
-        <time-account v-model="timeAccountModal" @on-refresh="handleFilterQuery" :mID='members_id'/>
-        <flow-account v-model="flowAccountModal" @on-refresh="handleFilterQuery" />
-    </Card>
+            <Menu-group title="使用">
+                <Menu-item key="3-1">新增和启动</Menu-item>
+                <Menu-item key="3-2">活跃分析</Menu-item>
+                <Menu-item key="3-3">时段分析</Menu-item>
+            </Menu-group>
+            <Menu-group title="留存">
+                <Menu-item key="3-4">用户留存</Menu-item>
+                <Menu-item key="3-5">流失用户</Menu-item>
+            </Menu-group>
+        </Submenu>
+        <Menu-item key="4">
+            <Icon type="settings"></Icon>
+            综合设置
+        </Menu-item>
+    </Menu>
+   
 </template>
 <script type="text/babel">
     import * as api from '@/api'
@@ -174,6 +151,7 @@
                     status: '',
                     created_at: []
                 },
+                theme1: 'primary',
                 addAccountModal: false,
                 importAccountModal: false,
                 timeAccountModal: false,

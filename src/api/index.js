@@ -17,6 +17,7 @@ import * as coupon from './modules/coupon'
 import * as agent from './modules/agent'
 import * as admin from './modules/admin'
 import * as own from './modules/own'
+import * as operate from './modules/operate'
 
 export {
     axios, instance,
@@ -34,5 +35,6 @@ export {
     coupon,
     agent,
     admin,
-    own
+    own,
+    operate
 }
