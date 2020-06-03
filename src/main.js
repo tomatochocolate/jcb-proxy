@@ -11,6 +11,9 @@ import store from '@/store'
 
 import App from '@/App'
 
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 Vue.use(ViewUI)
 Vue.use(events)
 Vue.use(filters)

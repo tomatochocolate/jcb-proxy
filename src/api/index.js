@@ -18,6 +18,7 @@ import * as agent from './modules/agent'
 import * as admin from './modules/admin'
 import * as own from './modules/own'
 import * as operate from './modules/operate'
+import * as analysis from './modules/analysis'
 
 export {
     axios, instance,
@@ -36,5 +37,6 @@ export {
     agent,
     admin,
     own,
-    operate
+    operate,
+    analysis
 }

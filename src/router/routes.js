@@ -15,6 +15,7 @@ import coupon from './modules/coupon'
 import admin from './modules/admin'
 import own from './modules/own'
 import operate from './modules/operate'
+import analysis from './modules/analysis'
 
 export default [
     ...home,
@@ -30,5 +31,6 @@ export default [
     // ...goods,
     // ...admin,
     ...own,
-    ...operate
+    ...operate,
+    ...analysis
 ]
