@@ -116,7 +116,7 @@
                     { title: '最后登录时间', key: 'timeLogin', width: 200 },
                     { title: '续费或体验开始时间', key: 'timeStart', width: 200 },
                     { title: '到期时间', key: 'timeEnd', width: 200 },
-                    {title:'用户数量',slot:'memberNumber',width:200}
+                    {title:'渠道',key:'channelReg',width:200}
                     // {slot: 'action',title: '操作',width: 150,align: 'center',fixed:'left'}
                     
                 ],

@@ -17,6 +17,7 @@
                     <FormItem class="btn-group">
                         <Button type="primary" @click="handleFilterQuery">查询</Button>
                         <Button type="info" @click="handleCreateAccountModal">生成卡券</Button>
+                        <Button type="primary" @click="modal1 = true">Display dialog box</Button>
                     </FormItem>
                 </Col>
                 <Col span="3" v-for="item,index in comboList" :key="item.goods_id"> 
@@ -47,6 +48,16 @@
          <coupon-account v-model="couponAccountModal" @on-refresh="handleFilterQuery" :comboList='comboList'/>
          <create-account v-model="createAccountModal" @on-refresh="handleFilterQuery" :comboList='comboList' :memberId='memberId'/>
 
+         <Modal
+            v-model="modal1"
+            title="生成的卡券"
+            @on-ok="ok"
+            @on-cancel="cancel">
+            <p>Content of dialog</p>
+            <p>Content of dialog</p>
+            <p>Content of dialog</p>
+        </Modal>
+
     </Card>
 </template>
 <script type="text/babel">
@@ -63,6 +74,12 @@
         mixins: [ page ],
         components:{CouponAccount,CreateAccount},
         methods: {
+            ok () {
+                this.$Message.info('Clicked ok');
+            },
+            cancel () {
+                this.$Message.info('Clicked cancel');
+            },
             handleCouponAccountModal(){
                 this.couponAccountModal = true
             },
@@ -140,6 +157,7 @@
         },
         data () {
             return {
+                modal1: false,
                  filterParams: {
                     cardId: '',
                     status: '',
