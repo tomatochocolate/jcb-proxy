@@ -38,6 +38,16 @@
             <Button type="text" @click="show = false">取消</Button>
             <Button type="primary" @click="handleSubmitForm">确定</Button>
         </div>
+
+        <Modal
+            v-model="modal1"
+            title="生成的卡券"
+            @on-ok="ok"
+            @on-cancel="cancel">
+            <p>Content of dialog</p>
+            <p>Content of dialog</p>
+            <p>Content of dialog</p>
+        </Modal>
     </Modal>
 </template>
 <script type="text/babel">
@@ -66,6 +76,19 @@
             }
         },
         methods: {
+            confirm(){
+                var newCotent = '<p>7天套餐：2020061016301789600</p><p>7天套餐：2020061016301789600</p>'
+                this.$Modal.info({
+                    title: '已生成卡券',
+                    content: newCotent,
+                    // onOk: () => {
+                    //     this.$Message.info('');
+                    // },
+                    onCancel: () => {
+                        this.$Message.info('Clicked cancel');
+                    }
+                });
+            },
             async handleSubmitForm () {
                 if (!await this.$refs.form.validate() || this.isSubmit) return
 
@@ -88,6 +111,7 @@
                     this.show = false
                     this.$emit('on-refresh')
                     this.$Message.success('添加成功')
+                    // this.confirm();
                 } catch (e) {
                     this.isSubmit = false
                     // this.$Message.error(e.message)
@@ -114,6 +138,7 @@
 
         data () {
             return {
+                modal1: false,
                 shareList:{
                     month : 0,
                     quarter : 0,

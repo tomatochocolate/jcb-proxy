@@ -17,7 +17,7 @@
                     <FormItem class="btn-group">
                         <Button type="primary" @click="handleFilterQuery">查询</Button>
                         <Button type="info" @click="handleCreateAccountModal">生成卡券</Button>
-                        <Button type="primary" @click="modal1 = true">Display dialog box</Button>
+                        <Button type="primary" @click="confirm">Display dialog box</Button>
                     </FormItem>
                 </Col>
                 <Col span="3" v-for="item,index in comboList" :key="item.goods_id"> 
@@ -74,6 +74,19 @@
         mixins: [ page ],
         components:{CouponAccount,CreateAccount},
         methods: {
+            confirm(){
+                var newCotent = '<p>7天套餐：2020061016301789600</p><p>7天套餐：2020061016301789600</p>'
+                this.$Modal.info({
+                    title: '已生成卡券',
+                    content: newCotent,
+                    // onOk: () => {
+                    //     this.$Message.info('');
+                    // },
+                    onCancel: () => {
+                        this.$Message.info('Clicked cancel');
+                    }
+                });
+            },
             ok () {
                 this.$Message.info('Clicked ok');
             },
