@@ -21,7 +21,7 @@
     "echarts": "^4.5.0",
     "enquire.js": "^2.1.6",
     "iview": "^3.4.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "numeral": "^2.0.6",
     "view-design": "^4.0.2",
     "vue": "^2.6.6",
